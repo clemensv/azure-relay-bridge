@@ -12,7 +12,7 @@ if [ -z ${ImageName+x} ]; then ImageName='ubuntu.18.04-x64'; fi
 if [ -z ${ImageSuffix+x} ]; then VersionSuffix='deb'; fi
 if [ -z ${VersionSuffix+x} ]; then VersionSuffix='preview'; fi
 if [ -z ${VersionPrefix+x} ]; then VersionPrefix='1.0.0'; fi
-if [ -z ${TargetFramework+x} ]; then TargetFramework='netcoreapp3.0'; fi
+if [ -z ${TargetFramework+x} ]; then TargetFramework='netcoreapp3.1'; fi
 
 echo $@
 

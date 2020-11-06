@@ -52,7 +52,7 @@ namespace azbridge
         {
             try
             {
-#if NET462
+#if NET48
                 if (settings.ServiceInstall.HasValue && settings.ServiceInstall.Value)
                 {
                     ServiceLauncher.InstallService();

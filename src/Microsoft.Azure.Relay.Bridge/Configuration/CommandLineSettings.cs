@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Relay.Bridge.Configuration
 
     public class CommandLineSettings
     {
-#if NET462
+#if NET48
         [Option(CommandOptionType.NoValue, LongName = "svcinstall", ShortName = "I", Description = "Install as Windows Service")]
         public bool? ServiceInstall { get; set; }
         [Option(CommandOptionType.NoValue, LongName = "svcuninstall", ShortName = "U", Description = "Uninstall Windows Service")]
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Relay.Bridge.Configuration
 
         public static void Run(string[] args, Func<CommandLineSettings, int> callback)
         {
-            CommandLineApplication<CommandLineSettings> app = new CommandLineApplication<CommandLineSettings>(throwOnUnexpectedArg: true);
+            CommandLineApplication<CommandLineSettings> app = new CommandLineApplication<CommandLineSettings>();
             app.ModelFactory = () => new CommandLineSettings();
             app.Conventions.UseDefaultConventions().SetAppNameFromEntryAssembly();
             app.Parse(args);

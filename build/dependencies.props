@@ -8,7 +8,7 @@
     <MicrosoftExtensionsLoggingConsolePackageVersion>2.1.1</MicrosoftExtensionsLoggingConsolePackageVersion>
     <MicrosoftDiagnosticsTracingEventSourcePackageVersion>1.1.28</MicrosoftDiagnosticsTracingEventSourcePackageVersion>
     <MicrosoftDiagnosticsTracingTraceEventPackageVersion>2.0.48</MicrosoftDiagnosticsTracingTraceEventPackageVersion>
-    <MicrosoftNETCoreApp30PackageVersion>3.0.0</MicrosoftNETCoreApp30PackageVersion>
+    <MicrosoftNETCoreApp31PackageVersion>3.0.0</MicrosoftNETCoreApp31PackageVersion>
     <MicrosoftNetHttpHeadersPackageVersion>3.0.0</MicrosoftNetHttpHeadersPackageVersion>
     <MicrosoftNETTestSdkPackageVersion>16.4.0</MicrosoftNETTestSdkPackageVersion>
     <NETStandardLibrary21PackageVersion>2.1.0</NETStandardLibrary21PackageVersion>

@@ -3,7 +3,7 @@
 
 using System.Text;
 
-#if NET462
+#if NET48
 namespace azbridge
 {
     using System.ComponentModel;

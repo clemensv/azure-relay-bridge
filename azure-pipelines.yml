@@ -7,7 +7,7 @@ pr:
   - master
 
 variables:
-  BuildVersion.MajorMinor: 0.3
+  BuildVersion.MajorMinor: 0.4
   BuildVersion.Revision: $[counter(variables['Version.MajorMinor'], 0)]
   BuildVersion: $(BuildVersion.MajorMinor).$(BuildVersion.Revision) 
 
@@ -32,7 +32,7 @@ jobs:
         command: 'test'
         arguments: '/p:WindowsOnly=true'
 
-    - publish: $(System.DefaultWorkingDirectory)\artifacts\build\net462
+    - publish: $(System.DefaultWorkingDirectory)\artifacts\build\net48
       artifact: WindowsBuild
 
   - job: LinuxBuild
@@ -52,5 +52,5 @@ jobs:
         command: 'test'
         arguments: '/p:RuntimeIdentifier=ubuntu-x64 /p:Configuration=Debug'
 
-    - publish: $(System.DefaultWorkingDirectory)/artifacts/build/netcoreapp3.0
+    - publish: $(System.DefaultWorkingDirectory)/artifacts/build/netcoreapp3.1
       artifact: XBuild

@@ -5,6 +5,7 @@
     <PublishTrimmed>true</PublishTrimmed>
     <PublishSingleFile>false</PublishSingleFile>
     <SelfContained>true</SelfContained>
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">win10-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,8 +30,8 @@
   
 
   <ItemGroup>
-    <LinuxFolder Include="/var/log/azbridge" Group="azbridge" Owner="azbridge" RemoveOnUninstall="true" Condition="! $(RuntimeIdentifier.StartsWith('win'))"/>
-    <LinuxFolder Include="/etc/azbridge" Group="azbridge" Owner="azbridge" RemoveOnUninstall="true" Condition="! $(RuntimeIdentifier.StartsWith('win'))"/>
+    <LinuxFolder Include="/var/log/azbridge" Group="azbridge" Owner="azbridge" RemoveOnUninstall="true" Condition="! $(RuntimeIdentifier.StartsWith('win'))" />
+    <LinuxFolder Include="/etc/azbridge" Group="azbridge" Owner="azbridge" RemoveOnUninstall="true" Condition="! $(RuntimeIdentifier.StartsWith('win'))" />
     <Content Include="azbridge_config.svc.yml" CopyToPublishDirectory="PreserveNewest" Condition="! $(RuntimeIdentifier.StartsWith('win'))">
       <LinuxPath>/etc/azbridge/azbridge_config.svc.yml</LinuxPath>
     </Content>
@@ -39,7 +40,7 @@
     </Content>
     <Content Include="azbridge.sh" CopyToPublishDirectory="PreserveNewest" Condition="! $(RuntimeIdentifier.StartsWith('win'))" RemoveOnUninstall="true">
       <LinuxPath>/etc/profile.d/azbridge.sh</LinuxPath>
-      <LinuxFileMode Condition="!($(RuntimeIdentifier.StartsWith('rhel')) OR $(RuntimeIdentifier.StartsWith('fedora')) OR $(RuntimeIdentifier.StartsWith('opensuse')) OR $(RuntimeIdentifier.StartsWith('centos')))" >0555</LinuxFileMode>
+      <LinuxFileMode Condition="!($(RuntimeIdentifier.StartsWith('rhel')) OR $(RuntimeIdentifier.StartsWith('fedora')) OR $(RuntimeIdentifier.StartsWith('opensuse')) OR $(RuntimeIdentifier.StartsWith('centos')))">0555</LinuxFileMode>
     </Content>
     <Content Include="../tools/Powershell/add-hostname.ps1" CopyToPublishDirectory="PreserveNewest" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
     <Content Include="../tools/Powershell/remove-hostname.ps1" CopyToPublishDirectory="PreserveNewest" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
@@ -52,7 +53,7 @@
   </PropertyGroup>
 
   <Choose>
-    <When Condition="'$(TargetFramework)' == 'net462'">
+    <When Condition="'$(TargetFramework)' == 'net48'">
       <ItemGroup>
         <Reference Include="System" />
         <Reference Include="System.ComponentModel.Composition" />
@@ -69,17 +70,17 @@
   </Choose>
 
   <ItemGroup>
-    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="$(McMasterExtensionsCommandLineUtilsPackageVersion)" />
+    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.0.0" />
     <PackageReference Include="System.Console" Version="$(SystemConsolePackageVersion)" />
     <PackageReference Include="System.IO" Version="$(SystemIOPackageVersion)" />
-    <PackageReference Include="System.Memory" Version="$(SystemMemoryPackageVersion)" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
     <PackageReference Include="System.Net.Http" Version="$(SystemNetHttpPackageVersion)" />
     <PackageReference Include="System.Net.NameResolution" Version="$(SystemNetNameResolutionPackageVersion)" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="$(SystemDiagnosticsDiagnosticSourcePackageVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingPackageVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="$(MicrosoftExtensionsLoggingConsolePackageVersion)" />
-    <PackageReference Include="Serilog.Extensions.Logging.File" Version="$(SerilogExtensionsLoggingFilePackageVersion)" />
-    <PackageReference Include="Packaging.Targets" Version="$(PackagingTargetsPackageVersion)" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.7.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.9" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.9" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
+    <PackageReference Include="Packaging.Targets" Version="0.1.189" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -88,9 +89,9 @@
   </PropertyGroup>
 
    <Choose>
-    <When Condition="'$(TargetFramework)' == 'net462'">
+    <When Condition="'$(TargetFramework)' == 'net48'">
       <ItemGroup>
-        <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="$(MicrosoftDiagnosticsTracingTraceEventPackageVersion)" />
+        <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="2.0.61" />
         <PackageReference Include="Microsoft.Diagnostics.Tracing.EventSource" Version="$(MicrosoftDiagnosticsTracingEventSourcePackageVersion)" />
         <PackageReference Include="Wix" Version="$(WixPackageVersion)" />
       </ItemGroup>
@@ -98,7 +99,7 @@
   </Choose>
 
   <Choose>
-    <When Condition="'$(TargetFramework)' == 'net462'">
+    <When Condition="'$(TargetFramework)' == 'net48'">
       <PropertyGroup>
         <DefineConstants>$(DefineConstants);USE_MDT_EVENTSOURCE</DefineConstants>
       </PropertyGroup>
@@ -137,7 +138,7 @@
 
   <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('debian')) OR $(RuntimeIdentifier.StartsWith('ubuntu')) OR $(RuntimeIdentifier.StartsWith('linuxmint'))">
     <!-- <DebDependency Include="lttng-ust" Version=""/> -->
-    <DebDependency Include="libcurl3 | libcurl4" Version=""/>
+    <DebDependency Include="libcurl3 | libcurl4" Version="" />
     <DebDependency Include="libssl1.0.0 | libssl1.0.2 | libssl1.1" Version="" />
     <DebDependency Include="libkrb5-3" Version="" />
     <DebDependency Include="zlib1g" Version="" />
@@ -176,34 +177,35 @@
 
   <Target Name="GetTargetPath" Returns="@(WixGetTargetPath)">
     <ItemGroup>
-      <WixGetTargetPath Include="$(MSBuildProjectDirectory)\$(OutputPath)\net462\$(AssemblyName).exe" />
+      <WixGetTargetPath Include="$(MSBuildProjectDirectory)\$(OutputPath)\net48\$(AssemblyName).exe" />
     </ItemGroup>
   </Target>
 
   <Target Name="PackageZip" DependsOnTargets="CreateZip" Condition="$(RuntimeIdentifier.EndsWith($(PlatformTarget))) AND $(RuntimeIdentifier.StartsWith('win'))">
     <Copy SourceFiles="$(ZipPath)" DestinationFolder="$(BuildDir)/$(TargetFramework)" />
   </Target>
-  <Target Name="PackageTarball" DependsOnTargets="CreateTarball" Condition="('$(TargetFramework)' == 'netcoreapp3.0') AND $(UnixRuntimeIdentifiers.Contains($(RuntimeIdentifier)))">
+  <Target Name="PackageTarball" DependsOnTargets="CreateTarball" Condition="('$(TargetFramework)' == 'netcoreapp3.1') AND $(UnixRuntimeIdentifiers.Contains($(RuntimeIdentifier)))">
     <Copy SourceFiles="$(TarballPath)" DestinationFolder="$(BuildDir)/$(TargetFramework)" />
   </Target>
-  <Target Name="PackageDebian" DependsOnTargets="CreateDeb" Condition="'$(OS)' == 'Unix' AND ('$(TargetFramework)' == 'netcoreapp3.0') AND ($(RuntimeIdentifier.StartsWith('ubuntu')) OR $(RuntimeIdentifier.StartsWith('debian')) OR $(RuntimeIdentifier.StartsWith('linuxmint')))">
+  <Target Name="PackageDebian" DependsOnTargets="CreateDeb" Condition="'$(OS)' == 'Unix' AND ('$(TargetFramework)' == 'netcoreapp3.1') AND ($(RuntimeIdentifier.StartsWith('ubuntu')) OR $(RuntimeIdentifier.StartsWith('debian')) OR $(RuntimeIdentifier.StartsWith('linuxmint')))">
     <Copy SourceFiles="$(DebPath)" DestinationFolder="$(BuildDir)/$(TargetFramework)" />
   </Target>
-  <Target Name="PackageRpm" DependsOnTargets="CreateRpm" Condition="'$(OS)' == 'Unix' AND ('$(TargetFramework)' == 'netcoreapp3.0') AND ($(RuntimeIdentifier.StartsWith('rhel')) OR $(RuntimeIdentifier.StartsWith('centos')) OR $(RuntimeIdentifier.StartsWith('fedora')) OR $(RuntimeIdentifier.StartsWith('opensuse')) OR $(RuntimeIdentifier.StartsWith('ol')))">
+  <Target Name="PackageRpm" DependsOnTargets="CreateRpm" Condition="'$(OS)' == 'Unix' AND ('$(TargetFramework)' == 'netcoreapp3.1') AND ($(RuntimeIdentifier.StartsWith('rhel')) OR $(RuntimeIdentifier.StartsWith('centos')) OR $(RuntimeIdentifier.StartsWith('fedora')) OR $(RuntimeIdentifier.StartsWith('opensuse')) OR $(RuntimeIdentifier.StartsWith('ol')))">
     <Copy SourceFiles="$(RpmPath)" DestinationFolder="$(BuildDir)/$(TargetFramework)" />
   </Target>
-  <Target Name="PackageWindows" DependsOnTargets="Publish" Condition="'$(OS)' == 'Windows_NT' AND '$(TargetFramework)' == 'net462' AND $(RuntimeIdentifier.StartsWith('win')) AND $(RuntimeIdentifier.EndsWith($(PlatformTarget)))">
+  <Target Name="PackageWindows" DependsOnTargets="Publish" Condition="'$(OS)' == 'Windows_NT' AND '$(TargetFramework)' == 'net48' AND $(RuntimeIdentifier.StartsWith('win')) AND $(RuntimeIdentifier.EndsWith($(PlatformTarget)))">
     <PropertyGroup>
       <MsiDir>$(PublishDir)../msi</MsiDir>
       <_OutputName>azbridge_installer.$(PackageVersion).$(RuntimeIdentifier)</_OutputName>
+      <VS160COMNTOOLS Condition="'$(VS160COMNTOOLS)'==''">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\</VS160COMNTOOLS>
     </PropertyGroup>
     <Exec WorkingDirectory="../azbridge-installer" Command="restore.cmd" />
     <!-- MUST USE 32-bit for WiX -->
-    <Error Condition="'$(MSBuildToolsPath32)'==''" Text="MSBuildToolsPath32 is not set. MSI installers MUST be built with msbuild.exe and not with dotnet msbuild" />
-    <Exec Command="&quot;$(MSBuildToolsPath32)\msbuild&quot; ../azbridge-installer/azbridge-installer.wixproj /t:Publish /p:TargetFramework=$(TargetFramework);RuntimeIdentifier=$(RuntimeIdentifier);BridgeProjectFile=$(MSBuildProjectFullPath);BridgePublishPath=$(MSBuildProjectDirectory)\$(PublishDir);OutputPath=$(MSBuildProjectDirectory)\$(MsiDir);OutputName=$(_OutputName);AlreadyPublished=true" />
+   <Error Condition="'$(VS160COMNTOOLS)'==''" Text="VS160COMNTOOLS is not set. MSI installers MUST be built with msbuild.exe and not with dotnet msbuild" />
+    <Exec Command="&quot;$(VS160COMNTOOLS)..\..\MSBuild\Current\Bin\msbuild&quot; ../azbridge-installer/azbridge-installer.wixproj /t:Publish /p:TargetFramework=$(TargetFramework);RuntimeIdentifier=$(RuntimeIdentifier);BridgeProjectFile=$(MSBuildProjectFullPath);BridgePublishPath=$(MSBuildProjectDirectory)\$(PublishDir);OutputPath=$(MSBuildProjectDirectory)\$(MsiDir);OutputName=$(_OutputName);AlreadyPublished=true" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\$(MsiDir)\$(_OutputName).msi" DestinationFolder="$(BuildDir)/$(TargetFramework)" />
   </Target>
-  <Target Name="PackageOSX" DependsOnTargets="Publish" Condition="'$(OS)' == 'Unix' AND ('$(TargetFramework)' == 'netcoreapp3.0') AND ($(RuntimeIdentifier.StartsWith('osx')))">
+  <Target Name="PackageOSX" DependsOnTargets="Publish" Condition="'$(OS)' == 'Unix' AND ('$(TargetFramework)' == 'netcoreapp3.1') AND ($(RuntimeIdentifier.StartsWith('osx')))">
 
   </Target>
   <Target Name="PublishPackages" DependsOnTargets="PackageDebian;PackageRpm;PackageWindows;PackageOSX;PackageZip;PackageTarball" Condition=" '$(RuntimeIdentifier)' != ''">
@@ -217,7 +219,7 @@
     </ItemGroup>
     <MSBuild Projects="$(MSBuildProjectFile)" Targets="Package" Properties="TargetFramework=$(TargetFramework);RuntimeIdentifier=%(_PublishRuntimeIdentifier.Identity)" />
   </Target>
-  <Target Name="PublishProjectForAllUnixRIDsIfTargetFrameworkSet" Condition=" '$(TargetFramework)' != '' and '$(TargetFramework)' != 'net462' and '$(RuntimeIdentifier)' == ''  and ('$(OS)' == 'Unix' OR '$(WindowsOnly)'=='false')">
+  <Target Name="PublishProjectForAllUnixRIDsIfTargetFrameworkSet" Condition=" '$(TargetFramework)' != '' and '$(TargetFramework)' != 'net48' and '$(RuntimeIdentifier)' == ''  and ('$(OS)' == 'Unix' OR '$(WindowsOnly)'=='false')">
     <ItemGroup>
       <_PublishRuntimeIdentifier Include="$(UnixRuntimeIdentifiers)" />
     </ItemGroup>
@@ -227,7 +229,7 @@
     <ItemGroup>
       <_PublishFramework Include="$(TargetFrameworks)" />
     </ItemGroup>
-    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Package" Properties="TargetFramework=%(_PublishFramework.Identity);RuntimeIdentifier=$(RuntimeIdentifier)" Condition="!('$(OS)' == 'Unix' AND '%(_PublishFramework.Identity)'=='net462')" />
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Package" Properties="TargetFramework=%(_PublishFramework.Identity);RuntimeIdentifier=$(RuntimeIdentifier)" Condition="!('$(OS)' == 'Unix' AND '%(_PublishFramework.Identity)'=='net48')" />
   </Target>
   <Target Name="Package" DependsOnTargets="PublishProjectIfFrameworkAndRIDSet;PublishProjectForAllFrameworksIfFrameworkUnset;PublishProjectForAllUnixRIDsIfTargetFrameworkSet;PublishProjectForAllWindowsRIDsIfTargetFrameworkSet" />
 </Project>

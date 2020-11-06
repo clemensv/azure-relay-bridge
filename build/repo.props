@@ -2,8 +2,8 @@
 
   <PropertyGroup>
       <WindowsOnly>false</WindowsOnly>
-      <WindowsFrameworks Condition="'$(OS)'=='Windows_NT'">net462;</WindowsFrameworks>
-      <CoreFrameworks Condition="'$(WindowsOnly)'!='true'">netcoreapp3.0</CoreFrameworks>
+      <WindowsFrameworks Condition="'$(OS)'=='Windows_NT'">net48;</WindowsFrameworks>
+      <CoreFrameworks Condition="'$(WindowsOnly)'!='true'">netcoreapp3.1</CoreFrameworks>
       <TargetFrameworks>$(WindowsFrameworks)$(CoreFrameworks)</TargetFrameworks>
       <WindowsRuntimeIdentifiers Condition="'$(OS)'=='Windows_NT'">win7-x64;win7-x86;win10-x64;win10-x86;</WindowsRuntimeIdentifiers>
       <UnixRuntimeIdentifiers Condition="'$(WindowsOnly)'=='false'">osx-x64;debian.9-x64;debian.10-x64;ubuntu.18.04-x64;opensuse.15.0-x64;fedora.30-x64</UnixRuntimeIdentifiers>
@@ -11,6 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <DotNetCoreRuntime Include="$(MicrosoftNETCoreApp30PackageVersion)" />
+    <DotNetCoreRuntime Include="$(MicrosoftNETCoreApp31PackageVersion)" />
   </ItemGroup>
 </Project>
