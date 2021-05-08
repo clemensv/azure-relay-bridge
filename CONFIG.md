@@ -4,7 +4,7 @@
 
 'azbridge' can be run in a "local" or "remote" mode. The "local" mode binds a
 local listener address or socket to a relay name. The "remote" mode binds a relay 
-name to a remote listener adress.
+name to a remote listener address.
 
 Since azbridge helps with scenarios not dissimilar to SSH tunnels, albeit without 
 requiring peer-to-peer connectivity, the command line syntax of 'azbridge' uses 
@@ -178,7 +178,7 @@ also mix protocols, e.g. `-R relay:7777;7777U` binds to
 TCP and UDP port forwarders for 7777 on one relay name.
 
 Port forwardings can also be specified in the configuration file.
-Privileged ports can be forwarded only when runing with elevated privileges.  
+Privileged ports can be forwarded only when running with elevated privileges.  
 IPv6 addresses can be specified by enclosing the address in square
 brackets.
 
@@ -205,7 +205,7 @@ the verbosity.  The maximum is 3.
 
 Connection String. Azure Relay connection string for the namespace
 or for a specific Azure Relay. The Connection String properties
-can be overriden by the -E (Endpoint), -K (SharedAccessKeyName),
+can be overridden by the -E (Endpoint), -K (SharedAccessKeyName),
 -k (SharedAccessKey), -S (SharedAccessSignature) arguments.
 
 If an EntityPath is specified in the connection string, that name 
@@ -220,7 +220,7 @@ environment variable.
 
 The configuration file is a YAML file that specifies options that apply 
 to the machine or user. The machine level options are always read and 
-then complemented by or overriden by the user-level options.
+then complemented by or overridden by the user-level options.
 
 The configuration file can exist in three locations:
 
