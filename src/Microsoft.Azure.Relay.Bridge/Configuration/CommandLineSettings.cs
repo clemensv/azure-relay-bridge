@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Relay.Bridge.Configuration
         [Option(CommandOptionType.SingleValue, ShortName = "s", Description = "Azure Relay shared access signature token")]
         public string Signature { get; set; }
 
-        [Option(CommandOptionType.SingleValue, ShortName = "x", Description = "Azure Relay connection string (overridden with -S -K -k -E)")]
+        [Option(CommandOptionType.SingleValue, ShortName = "x", Description = "Azure Relay connection string (overridden with -S -K -k -e)")]
         public string ConnectionString { get; internal set; }
 
         [Option(CommandOptionType.NoValue, ShortName = "v", Description = "Verbose log output")]

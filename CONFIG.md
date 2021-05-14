@@ -51,7 +51,7 @@ address.
 
 Reserved. Not presently supported
 
-**-E endpoint_uri**
+**-e endpoint_uri**
 
 Azure Relay endpoint URI (see -x).
 
@@ -205,7 +205,7 @@ the verbosity.  The maximum is 3.
 
 Connection String. Azure Relay connection string for the namespace
 or for a specific Azure Relay. The Connection String properties
-can be overriden by the -E (Endpoint), -K (SharedAccessKeyName),
+can be overriden by the -e (Endpoint), -K (SharedAccessKeyName),
 -k (SharedAccessKey), -S (SharedAccessSignature) arguments.
 
 If an EntityPath is specified in the connection string, that name 
